@@ -1,9 +1,6 @@
 package br.com.quartos.service;
 
-import br.com.quartos.model.Banheiro;
-import br.com.quartos.model.Movel;
-import br.com.quartos.model.Predio;
-import br.com.quartos.model.Quarto;
+import br.com.quartos.model.*;
 import br.com.quartos.model.enums.TipoCama;
 import br.com.quartos.model.enums.TipoQuarto;
 import br.com.quartos.repository.QuartoRepository;
@@ -61,6 +58,26 @@ class QuartoServiceImplTest {
         Quarto quarto = quartoRepository.findById(quarto1.getId()).orElse(null);
 
         assertEquals(quarto, quarto1);
+    }
+
+    @Test
+    void getByLocalidade() {
+        createQuartos();
+        Predio predio = new Predio();
+        Localidade localidade = new Localidade();
+        localidade.setNome("Teste");
+        predio.setLocalidade(localidade);
+        quarto1.setPredio(predio);
+        quartoRepository.save(quarto1);
+
+        Mockito.when(quartoRepository.findById(quarto1.getId())).thenReturn(Optional.of(quarto1));
+
+        Quarto quarto = quartoRepository.findById(quarto1.getId()).orElse(null);
+
+        String nome1 = quarto.getPredio().getLocalidade().getNome();
+        String nome2 = quarto1.getPredio().getLocalidade().getNome();
+
+        assertEquals(nome1, nome2);
     }
 
     @Test
