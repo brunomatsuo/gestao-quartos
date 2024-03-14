@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -34,8 +35,8 @@ public class QuartoServiceImpl implements QuartoService {
     }
 
     @Override
-    public List<Quarto> getByPredio(Predio predio) {
-        return quartoRepository.findByPredio(predio);
+    public List<Quarto> getByLocalidade(String localidade) {
+        return quartoRepository.findAll().stream().filter(quarto -> quarto.getPredio().getLocalidade().getNome().equals(localidade)).collect(Collectors.toList());
     }
 
     @Override

@@ -29,9 +29,9 @@ public class QuartoController {
         return quarto != null ? ResponseEntity.ok(quarto) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/predio")
-    public ResponseEntity getByPredio(@RequestBody Predio predio) {
-        List<Quarto> quartos = quartoService.getByPredio(predio);
+    @PostMapping("/localidade")
+    public ResponseEntity getByLocalidade(@RequestParam String localidade) {
+        List<Quarto> quartos = quartoService.getByLocalidade(localidade);
         return quartos.size() > 0 ? ResponseEntity.ok(quartos) : ResponseEntity.notFound().build();
     }
 
